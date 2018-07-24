@@ -1,4 +1,9 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.template.defaultfilters import slugify
+from django.utils import timezone
+from ckeditor.fields import RichTextField
+
 
 
 class CompaniesLoans(models.Model):
@@ -30,3 +35,33 @@ class CompaniesCredit(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Post(models.Model):
+
+    title = models.CharField(max_length=255, null=False)
+    published_date = models.DateTimeField(default=timezone.now(), blank=True, null=True)
+    description = RichTextField(null=False)
+    body = models.TextField(null=False)
+    meta_title = models.CharField(max_length=158, null=False)
+    meta_description = models.CharField(max_length=320, null=False)
+    slug = models.SlugField(default='', null=False)
+
+    def validate_title(self):
+        title_exists = Post.objects.filter(title=self.title).exists()
+
+        if title_exists:
+            raise ValidationError('Title already exists ! ')
+
+
+    def save(self):
+        self.slug = slugify(self.title)
+        self.validate_title()
+        super(Post, self).save()
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title

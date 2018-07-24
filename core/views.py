@@ -1,11 +1,13 @@
 from __future__ import absolute_import, unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView
 from django.template import TemplateDoesNotExist
 from django.http import Http404
+from django.utils import timezone
 from .forms import SliderForm
+from .models import Post
 from loans import settings
 
 
@@ -76,6 +78,34 @@ class GenericHTMLView(TemplateView):
             return response.render()
         except TemplateDoesNotExist:
             raise Http404()
+
+class Blog(View):
+    def post(self, request):
+        pass
+
+    def get(self, request):
+        posts = Post.objects.filter(published_date__lte=timezone.now()).\
+            order_by('published_date')
+
+        context = {
+            'posts': posts,
+        }
+
+        return render(request,
+                      settings.TEMPLATES_MAIN_PREFIX + "/blog.html", context)
+
+class BlogPosts(View):
+    def post(self, request):
+        pass
+
+    def get(self, request, post):
+        single_post = get_object_or_404(Post, slug=post)
+
+        context = {
+            'post': single_post
+
+        }
+        return render(request, settings.TEMPLATES_MAIN_PREFIX + "/single_blog_posts.html", context)
 
 
 
