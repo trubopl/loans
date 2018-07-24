@@ -231,15 +231,17 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/core/templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/core/templates/companies/base" />
       <recent name="$PROJECT_DIR$/core/templates/main" />
       <recent name="$PROJECT_DIR$/core/templates/companies" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/core" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/core/static/css" />
+      <recent name="$PROJECT_DIR$/core/static/png" />
+      <recent name="$PROJECT_DIR$/core/templates" />
     </key>
   </component>
   <component name="RunDashboard">
